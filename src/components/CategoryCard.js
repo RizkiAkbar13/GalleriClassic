@@ -1,35 +1,17 @@
-import React, { useRef } from 'react';
-import { View, Text, Image, TouchableOpacity, StyleSheet, Animated } from 'react-native';
+import React from 'react';
+import { View, Text, Image, TouchableOpacity, StyleSheet } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 
-const CategoryCard = ({ name, image, onPress }) => {
-  const scaleAnim = useRef(new Animated.Value(1)).current;
-
-  const handlePressIn = () => {
-    Animated.timing(scaleAnim, {
-      toValue: 1.15,
-      duration: 200,
-      useNativeDriver: true,
-    }).start();
-  };
-
-  const handlePressOut = () => {
-    Animated.timing(scaleAnim, {
-      toValue: 1,
-      duration: 200,
-      useNativeDriver: true,
-    }).start();
-  };
+const CategoryCard = ({ name, image, musicList }) => {
+  const navigation = useNavigation();
 
   return (
-    <TouchableOpacity
-      onPressIn={handlePressIn}
-      onPressOut={handlePressOut}
-      onPress={onPress}
+    <TouchableOpacity 
+      style={styles.card} 
+      onPress={() => navigation.navigate('MusicCategory', { categoryName: name, musicList })}
     >
-      <Animated.View style={[styles.card, { transform: [{ scale: scaleAnim }] }]}> 
-        <Image source={image} style={styles.image} />
-        <Text style={styles.name}>{name}</Text>
-      </Animated.View>
+      <Image source={image} style={styles.image} />
+      <Text style={styles.name}>{name}</Text>
     </TouchableOpacity>
   );
 };
@@ -50,7 +32,7 @@ const styles = StyleSheet.create({
     resizeMode: 'contain',
   },
   name: {
-    fontSize: 13,
+     fontSize: 13,
     fontWeight: 'bold',
     textAlign: 'center',
   },

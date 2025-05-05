@@ -7,10 +7,13 @@ import { useFavorites } from '../context/FavoriteContext';
 const MusicCard = ({ title, description, image, audio }) => {
   const navigation = useNavigation(); 
   const [scaleAnim] = useState(new Animated.Value(1));
+  const [fadeAnim] = useState(new Animated.Value(0));
+
   const { addToFavorites, removeFromFavorites, isFavorite } = useFavorites();
 
-  const item = { title, description, image };
-  const [isBookmarked, setIsBookmarked] = useState(isFavorite(item)); 
+  // ✅ item lengkap termasuk audio
+  const item = { title, description, image, audio };
+  const [isBookmarked, setIsBookmarked] = useState(isFavorite(item));
 
   const handlePress = () => {
     Animated.sequence([
@@ -30,18 +33,32 @@ const MusicCard = ({ title, description, image, audio }) => {
     if (isBookmarked) {
       removeFromFavorites(item);
     } else {
-      addToFavorites(item);
+      addToFavorites(item); // ✅ menyimpan semua data termasuk audio
     }
     setIsBookmarked(!isBookmarked);
   };
 
   useEffect(() => {
     setIsBookmarked(isFavorite(item));
+
+    Animated.timing(fadeAnim, {
+      toValue: 1,
+      duration: 500,
+      useNativeDriver: true,
+    }).start();
   }, [isFavorite(item)]);
 
   return (
     <TouchableOpacity onPress={handlePress} activeOpacity={0.9}>
-      <Animated.View style={[styles.listItem, { transform: [{ scale: scaleAnim }] }]}>
+      <Animated.View
+        style={[
+          styles.listItem,
+          {
+            transform: [{ scale: scaleAnim }],
+            opacity: fadeAnim,
+          },
+        ]}
+      >
         <TouchableOpacity style={styles.bookmarkIcon} onPress={toggleBookmark}>
           <Ionicons
             name={isBookmarked ? 'bookmark' : 'bookmark-outline'}

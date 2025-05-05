@@ -31,6 +31,7 @@ const FavoriteScreen = () => {
                 title={item.title}
                 description={item.description}
                 image={item.image}
+                audio={item.audio}
               />
             </TouchableOpacity>
           )}

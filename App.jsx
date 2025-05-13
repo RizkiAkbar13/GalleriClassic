@@ -6,6 +6,7 @@ import BottomTabNavigator from './src/navigation/BottomTabNavigator';
 import ProfileScreen from './src/screens/ProfileScreen';
 import MusicCategoryScreen from './src/screens/MusicCategoryScreen';
 import MusicDetailScreen from './src/screens/MusicDetailScreen'; 
+import DetailAlatMusikScreen from './src/screens/DetailAlatMusikScreen';
 import { FavoriteProvider } from './src/context/FavoriteContext'; 
 
 const Stack = createStackNavigator();
@@ -30,6 +31,13 @@ export default function App() {
             component={MusicDetailScreen} 
             options={({ route }) => ({
               title: route.params?.title || 'Detail Musik',
+            })}
+          />
+          <Stack.Screen 
+            name="DetailAlatMusik" 
+            component={DetailAlatMusikScreen} 
+            options={({ route }) => ({
+              title: route.params?.title || 'Detail Alat Musik',
             })}
           />
           <Stack.Screen 

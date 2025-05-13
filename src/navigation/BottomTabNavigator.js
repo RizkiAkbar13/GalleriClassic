@@ -5,6 +5,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import AppHome from '../../AppHome';
 import ProfileScreen from '../screens/ProfileScreen';
 import FavoriteScreen from '../screens/FavoriteScreen';
+import AddMusicScreen from '../screens/AddMusicScreen';
 
 const Tab = createBottomTabNavigator();
 
@@ -19,6 +20,8 @@ const BottomTabNavigator = () => {
             iconName = focused ? 'home' : 'home-outline';
           } else if (route.name === 'Favorite') {
             iconName = focused ? 'heart' : 'heart-outline';
+          } else if (route.name === 'AddMusic') {
+            iconName = focused ? 'musical-notes' : 'musical-notes-outline';
           } else if (route.name === 'Profile') {
             iconName = focused ? 'person' : 'person-outline';
           }
@@ -43,6 +46,7 @@ const BottomTabNavigator = () => {
     >
       <Tab.Screen name="Home" component={AppHome} />
       <Tab.Screen name="Favorite" component={FavoriteScreen} />
+      <Tab.Screen name="AddMusic" component={AddMusicScreen} />
       <Tab.Screen name="Profile" component={ProfileScreen} />
     </Tab.Navigator>
   );
